@@ -1,0 +1,85 @@
+{
+  "bot_info": {
+    "name": "AdaptBot",
+    "version": "1.0.0",
+    "description": "An adaptive chatbot with customizable knowledge and behavior",
+    "language": "en"
+  },
+  "personality": {
+    "tone": "friendly",
+    "formality": "casual",
+    "empathy_level": "high",
+    "humor": "moderate",
+    "verbosity": "balanced"
+  },
+  "behavior": {
+    "conversation_style": "natural",
+    "max_response_length": 500,
+    "use_emojis": false,
+    "typing_indicator": true,
+    "response_delay_ms": 500,
+    "context_retention": true,
+    "context_memory_turns": 10
+  },
+  "purposes": [
+    "general_conversation",
+    "information_retrieval",
+    "customer_support",
+    "question_answering"
+  ],
+  "capabilities": {
+    "intent_recognition": true,
+    "context_awareness": true,
+    "multi_turn_conversation": true,
+    "fallback_handling": true,
+    "sentiment_analysis": false,
+    "language_detection": false
+  },
+  "matching_config": {
+    "similarity_threshold": 0.6,
+    "case_sensitive": false,
+    "fuzzy_matching": true,
+    "partial_match": true,
+    "min_match_score": 0.5
+  },
+  "response_rules": {
+    "require_greeting_first": false,
+    "max_consecutive_unknown": 3,
+    "suggest_alternatives": true,
+    "escalation_enabled": false,
+    "escalation_threshold": 2,
+    "confidence_threshold": 0.7
+  },
+  "safety": {
+    "content_filtering": true,
+    "profanity_filter": false,
+    "toxic_content_filter": false,
+    "personal_info_detection": false
+  },
+  "learning": {
+    "adaptive_learning": true,
+    "log_conversations": true,
+    "learn_from_feedback": true,
+    "update_frequency": "daily"
+  },
+  "fallback_strategy": {
+    "primary": "use_fallback_responses",
+    "secondary": "suggest_help",
+    "tertiary": "escalate_to_human"
+  },
+  "api_settings": {
+    "rate_limit": {
+      "enabled": true,
+      "max_requests_per_minute": 60,
+      "max_requests_per_hour": 1000
+    },
+    "timeout_ms": 5000,
+    "max_message_length": 1000
+  },
+  "metadata": {
+    "created_at": "2024-01-01T00:00:00Z",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "owner": "default",
+    "environment": "development"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "intents": {
+    "greeting": {
+      "patterns": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "greetings",
+        "what's up",
+        "howdy"
+      ],
+      "responses": [
+        "Hello! How can I assist you today?",
+        "Hi there! What can I help you with?",
+        "Hey! I'm here to help. What do you need?",
+        "Greetings! How may I be of service?"
+      ]
+    },
+    "farewell": {
+      "patterns": [
+        "bye",
+        "goodbye",
+        "see you",
+        "talk to you later",
+        "have a good day",
+        "take care",
+        "farewell"
+      ],
+      "responses": [
+        "Goodbye! Have a great day!",
+        "See you later! Take care!",
+        "Bye! Feel free to come back anytime!",
+        "Take care! It was nice chatting with you!"
+      ]
+    },
+    "thanks": {
+      "patterns": [
+        "thank you",
+        "thanks",
+        "appreciate it",
+        "thanks a lot",
+        "thank you so much"
+      ],
+      "responses": [
+        "You're welcome!",
+        "Happy to help!",
+        "Anytime! Glad I could assist!",
+        "My pleasure!"
+      ]
+    }
+  },
+  "knowledge_base": {
+    "topics": {
+      "capabilities": {
+        "keywords": [
+          "what can you do",
+          "what do you do",
+          "what are you capable of",
+          "your capabilities",
+          "your features",
+          "your abilities",
+          "what are your skills",
+          "help me with",
+          "what do you know",
+          "what do you know about",
+          "tell me about yourself",
+          "what are you",
+          "who are you",
+          "what is your purpose",
+          "what's your purpose",
+          "why are you here",
+          "how can you help",
+          "how can you help me",
+          "what can you help with",
+          "what can you assist with",
+          "what are you for",
+          "what's your function",
+          "what do you offer",
+          "what services do you provide",
+          "explain yourself",
+          "introduce yourself",
+          "tell me what you do",
+          "what kind of bot are you",
+          "what type of bot are you",
+          "are you useful",
+          "what makes you special",
+          "why should i use you",
+          "what's the point of you"
+        ],
+        "content": "I'm an adaptive chatbot that can help you with anything! My knowledge is fully customizable - just add your specific data to the chatbot_knowledge.json file in the data folder, and I'll be able to answer questions about those topics. You can teach me about any subject by adding topics and FAQs to my knowledge base. The more information you provide, the more helpful I can be!"
+      },
+      "how_to_customize": {
+        "keywords": [
+          "how to customize",
+          "how do i customize",
+          "how to customize you",
+          "how to teach",
+          "how to teach you",
+          "how do i teach you",
+          "how to add information",
+          "how do i add information",
+          "how to update knowledge",
+          "how to update you",
+          "how does customization work",
+          "how to configure",
+          "how to configure you",
+          "how to set you up",
+          "how to program you",
+          "how to train you",
+          "how do i make you smarter",
+          "how do i add data",
+          "where do i add information",
+          "how to give you knowledge",
+          "how to make you learn"
+        ],
+        "content": "To customize my knowledge, simply edit the chatbot_knowledge.json file in the data folder. You can add topics with keywords and content, or create FAQ entries. I'll automatically learn from that information and be able to answer questions about it. Just restart the backend after making changes!"
+      }
+    },
+    "faqs": [
+      {
+        "question": "How do I add custom knowledge?",
+        "keywords": [
+          "add knowledge",
+          "add custom knowledge",
+          "custom data",
+          "teach you",
+          "add information",
+          "update you",
+          "give you knowledge",
+          "make you learn",
+          "add new topics",
+          "expand your knowledge"
+        ],
+        "answer": "You can add custom knowledge by editing the chatbot_knowledge.json file in the data folder. Add new topics under 'topics' with keywords and content, or add FAQ entries. I'll read that file and be able to answer questions based on the information you provide."
+      },
+      {
+        "question": "What format should the data be in?",
+        "keywords": [
+          "data format",
+          "json format",
+          "file format",
+          "structure format",
+          "what format",
+          "how to structure",
+          "format required"
+        ],
+        "answer": "The data should be in JSON format. For topics, include keywords (phrases I should look for) and content (the answer I should give). For FAQs, include the question, keywords, and answer. Check the existing structure in chatbot_knowledge.json for examples."
+      },
+      {
+        "question": "Do I need to restart after adding knowledge?",
+        "keywords": [
+          "restart",
+          "reload",
+          "refresh",
+          "apply changes",
+          "update changes",
+          "do i need to restart",
+          "changes not working"
+        ],
+        "answer": "Yes, you need to restart the backend server after editing the chatbot_knowledge.json file. This allows me to reload the updated knowledge base. Just stop and start the Python backend, and I'll have access to your new information!"
+      }
+    ]
+  },
+  "fallback_responses": [
+    "I don't have information about that in my knowledge base yet. You can add custom knowledge by editing the chatbot_knowledge.json file in the data folder!",
+    "I'm not sure about that. Remember, I learn from the chatbot_knowledge.json file - feel free to add information there and I'll be able to help!",
+    "That's outside my current knowledge. Is there something else I can help with, or would you like to know how to add custom information to my knowledge base?"
+  ]
+}
