@@ -1,0 +1,558 @@
+/* ============================================================
+   AdminPage.module.css
+   Matches the black/green cyberpunk design system exactly.
+   Same CSS variables, clamp() fluid sizing, animation patterns.
+   ============================================================ */
+
+:root {
+  --color-bg-nav:        #000000;
+  --color-bg-dropdown:   #0d0d0d;
+  --color-bg-card:       #0d0d0d;
+  --color-bg-page:       #080808;
+  --color-border:        rgba(74, 222, 128, 0.2);
+  --color-border-hover:  rgba(74, 222, 128, 0.35);
+  --color-border-focus:  rgba(74, 222, 128, 0.55);
+  --color-accent:        #4ade80;
+  --color-accent-dark:   #22c55e;
+  --color-accent-hover:  #86efac;
+  --color-accent-dim:    rgba(74, 222, 128, 0.08);
+  --color-accent-glow:   rgba(34, 197, 94, 0.35);
+  --color-text-primary:  #d1d5db;
+  --color-text-heading:  #e5e7eb;
+  --color-text-muted:    #6b7280;
+  --color-danger:        #ef4444;
+  --color-warning:       #f59e0b;
+  --color-info:          #3b82f6;
+  --container-max:       1920px;
+  --container-pad:       clamp(1rem, 4vw, 3rem);
+  --nav-height:          5rem;
+  --sidebar-width:       240px;
+}
+
+/* ── Page shell ── */
+.page {
+  min-height: 100vh;
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Layout — sidebar + main
+   ============================================================ */
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - var(--nav-height));
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--color-bg-nav);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  overflow-y: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+  animation: fadeIn 0.4s ease both;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.sidebarSection {
+  padding: 0 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.sidebarLabel {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 1rem 0.75rem 0.4rem;
+}
+
+.sidebarBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: none;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: clamp(0.78rem, 0.85vw, 0.875rem);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  text-align: left;
+  letter-spacing: 0.03em;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.sidebarBtn:hover {
+  background: var(--color-accent-dim);
+  color: var(--color-text-heading);
+}
+.sidebarBtnActive {
+  background: rgba(34, 197, 94, 0.12) !important;
+  color: var(--color-accent) !important;
+  border: 1px solid rgba(74, 222, 128, 0.15);
+}
+.sidebarBtnActive svg { stroke: var(--color-accent); }
+
+.sidebarIcon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.sidebarDivider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0.75rem 1rem;
+}
+
+/* ── Main content ── */
+.main {
+  flex: 1;
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--container-pad);
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   Page Header
+   ============================================================ */
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  flex-wrap: wrap;
+  gap: 1rem;
+  animation: fadeIn 0.5s ease both;
+}
+
+.pageHeaderLeft { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.pageEyebrow {
+  font-size: clamp(0.65rem, 0.75vw, 0.75rem);
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.pageTitle {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text-heading);
+  letter-spacing: -0.01em;
+}
+
+.pageActions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+
+.btnPrimary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--color-accent-dark);
+  color: #000;
+  border: none;
+  border-radius: 0.375rem;
+  font-family: inherit;
+  font-size: clamp(0.78rem, 0.85vw, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.btnPrimary:hover {
+  background: var(--color-accent);
+  box-shadow: 0 0 18px var(--color-accent-glow);
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  font-family: inherit;
+  font-size: clamp(0.78rem, 0.85vw, 0.875rem);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.btnSecondary:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-heading);
+  background: var(--color-accent-dim);
+}
+
+/* ============================================================
+   Stat Cards Row
+   ============================================================ */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(180px, 20vw, 240px), 1fr));
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.statCard {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: clamp(1rem, 1.5vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: cardIn 0.35s ease both;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-dark), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.statCard:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(74, 222, 128, 0.08);
+  transform: translateY(-2px);
+}
+.statCard:hover::before { opacity: 1; }
+
+.statCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statLabel {
+  font-size: clamp(0.68rem, 0.75vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.statIconWrap {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  background: var(--color-accent-dim);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.statIconWrap svg { width: 14px; height: 14px; stroke: var(--color-accent); }
+
+.statValue {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text-heading);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.statDelta {
+  font-size: clamp(0.68rem, 0.75vw, 0.78rem);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.statDeltaUp   { color: var(--color-accent); }
+.statDeltaDown { color: var(--color-danger); }
+.statDeltaNeutral { color: var(--color-text-muted); }
+
+/* ============================================================
+   Two-column content row
+   ============================================================ */
+.contentRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (max-width: 900px) {
+  .contentRow { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   Panel (reusable card container)
+   ============================================================ */
+.panel {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  animation: cardIn 0.4s ease both;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panelTitle {
+  font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+  font-weight: 600;
+  color: var(--color-text-heading);
+  letter-spacing: 0.03em;
+}
+
+.panelAction {
+  font-size: clamp(0.68rem, 0.75vw, 0.78rem);
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+.panelAction:hover { color: var(--color-accent-hover); }
+
+.panelBody { padding: 0; }
+
+/* ============================================================
+   Orders Table
+   ============================================================ */
+.table { width: 100%; border-collapse: collapse; }
+
+.tableTh {
+  padding: 0.65rem 1.25rem;
+  text-align: left;
+  font-size: clamp(0.62rem, 0.7vw, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+.tableTr {
+  border-bottom: 1px solid rgba(74, 222, 128, 0.06);
+  transition: background 0.15s ease;
+}
+.tableTr:last-child { border-bottom: none; }
+.tableTr:hover { background: var(--color-accent-dim); }
+
+.tableTd {
+  padding: 0.8rem 1.25rem;
+  font-size: clamp(0.75rem, 0.82vw, 0.875rem);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.tableOrderId {
+  font-family: 'Courier New', monospace;
+  color: var(--color-accent);
+  font-size: clamp(0.72rem, 0.8vw, 0.82rem);
+}
+
+.tableCustomer { color: var(--color-text-heading); font-weight: 500; }
+.tableAmount   { color: var(--color-text-heading); font-weight: 600; }
+
+/* Status badges */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: clamp(0.62rem, 0.7vw, 0.7rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.statusBadge::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.statusPaid       { background: rgba(34, 197, 94, 0.12);  color: var(--color-accent);  border: 1px solid rgba(74, 222, 128, 0.2); }
+.statusPending    { background: rgba(245, 158, 11, 0.12); color: var(--color-warning); border: 1px solid rgba(245, 158, 11, 0.2); }
+.statusShipped    { background: rgba(59, 130, 246, 0.12); color: var(--color-info);    border: 1px solid rgba(59, 130, 246, 0.2); }
+.statusCancelled  { background: rgba(239, 68, 68, 0.12);  color: var(--color-danger);  border: 1px solid rgba(239, 68, 68, 0.2); }
+
+/* ============================================================
+   Activity Feed
+   ============================================================ */
+.activityList { padding: 0.5rem 0; }
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(74, 222, 128, 0.05);
+  transition: background 0.15s ease;
+}
+.activityItem:last-child { border-bottom: none; }
+.activityItem:hover { background: var(--color-accent-dim); }
+
+.activityDot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+.activityDotGreen  { background: var(--color-accent-dark); box-shadow: 0 0 6px var(--color-accent-glow); }
+.activityDotYellow { background: var(--color-warning); }
+.activityDotRed    { background: var(--color-danger); }
+.activityDotBlue   { background: var(--color-info); }
+
+.activityText {
+  flex: 1;
+  font-size: clamp(0.75rem, 0.82vw, 0.875rem);
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+.activityText strong { color: var(--color-text-heading); font-weight: 600; }
+
+.activityTime {
+  font-size: clamp(0.65rem, 0.72vw, 0.75rem);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Full-width panel (inventory table)
+   ============================================================ */
+.fullPanel {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  animation: cardIn 0.45s ease both;
+}
+
+.inventoryBar {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.1);
+  overflow: hidden;
+  min-width: 80px;
+}
+.inventoryFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent));
+  transition: width 0.6s ease;
+}
+.inventoryFillLow { background: linear-gradient(90deg, #dc2626, var(--color-danger)); }
+.inventoryFillMid { background: linear-gradient(90deg, #d97706, var(--color-warning)); }
+
+/* ============================================================
+   Chart placeholder
+   ============================================================ */
+.chartWrap {
+  padding: 1.25rem;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.chartBar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, var(--color-accent-dark), rgba(34, 197, 94, 0.3));
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-bottom: none;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+.chartBar:hover { opacity: 0.85; }
+.chartBar:hover .chartTooltip { opacity: 1; transform: translateY(0); }
+
+.chartTooltip {
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--color-bg-dropdown);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.65rem;
+  color: var(--color-accent);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.chartLabels {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 1.25rem 1rem;
+}
+.chartLabel {
+  flex: 1;
+  text-align: center;
+  font-size: clamp(0.58rem, 0.65vw, 0.68rem);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   Animations (matching site-wide patterns)
+   ============================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .statsGrid { grid-template-columns: 1fr; }
+}

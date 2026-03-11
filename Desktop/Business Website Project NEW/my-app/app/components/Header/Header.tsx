@@ -1,6 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useLanguage } from '@/app/components/Header/LanguageContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.css';
@@ -9,12 +12,12 @@ import styles from './Header.module.css';
    Data
    ============================================================ */
 const products = [
-  { title: 'Circuit Boards',          description: 'Custom PCBs for your projects',       icon: '🔌', href: '#circuit-boards' },
-  { title: 'Microchips & Processors', description: 'High-performance computing chips',    icon: '💾', href: '#microchips'     },
-  { title: 'Sensors & Components',    description: 'Essential electronic components',     icon: '📡', href: '#sensors'        },
-  { title: 'Development Kits',        description: 'Complete starter kits for makers',    icon: '🛠️', href: '#dev-kits'       },
-  { title: 'Custom Solutions',        description: 'Tailored hardware for your needs',    icon: '⚡', href: '#custom'         },
-  { title: 'Bulk Orders',             description: 'Wholesale pricing available',         icon: '📦', href: '#bulk'           },
+  { title: 'Circuit Boards',          description: 'Custom PCBs for your projects',    icon: '🔌', href: '/products/Circuitboards' },
+  { title: 'Microchips & Processors', description: 'High-performance computing chips', icon: '💾', href: '/products/Microchips' },
+  { title: 'Sensors & Components',    description: 'Essential electronic components',  icon: '📡', href: '/products/Sensors' },
+  { title: 'Development Kits',        description: 'Complete starter kits for makers', icon: '🛠️', href: '/products/Devkits' },
+  { title: 'Custom Solutions',        description: 'Tailored hardware for your needs', icon: '⚡', href: '/products/Custom' },
+  { title: 'Bulk Orders',             description: 'Wholesale pricing available',      icon: '📦', href: '/products/Bulkorders' },
 ];
 
 const services = [
@@ -29,16 +32,21 @@ const services = [
    ============================================================ */
 type NavItem = { title: string; description: string; icon: string; href: string };
 
+interface HeaderProps {
+  /** Pass true on inner pages (e.g. ProductCatalog) to render
+   *  only the nav bar — no background image or hero content. */
+  navOnly?: boolean;
+}
+
 /* ============================================================
    Sub-components
    ============================================================ */
 
-/** Desktop dropdown grid of items */
 function DropdownGrid({ items }: { items: NavItem[] }) {
   return (
     <div className={styles.dropdownGrid}>
       {items.map((item, i) => (
-        <a key={i} href={item.href} className={styles.dropdownItem}>
+        <Link key={i} href={item.href} className={styles.dropdownItem}>
           <div className={styles.dropdownItemInner}>
             <span className={styles.dropdownIcon}>{item.icon}</span>
             <div className={styles.dropdownTextGroup}>
@@ -49,27 +57,25 @@ function DropdownGrid({ items }: { items: NavItem[] }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   );
 }
 
-/** "View All" footer strip */
 function DropdownFooter({ label, href }: { label: string; href: string }) {
   return (
     <div className={styles.dropdownFooter}>
-      <a href={href} className={styles.dropdownFooterLink}>
+      <Link href={href} className={styles.dropdownFooterLink}>
         <span>{label}</span>
         <svg className={styles.dropdownFooterIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>
-      </a>
+      </Link>
     </div>
   );
 }
 
-/** Animated chevron */
 function Chevron({ open }: { open: boolean }) {
   return (
     <svg
@@ -83,7 +89,6 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-/** Mobile accordion section for Services / Products */
 function MobileAccordion({ label, items }: { label: string; items: NavItem[] }) {
   const [open, setOpen] = useState(false);
   return (
@@ -108,7 +113,6 @@ function MobileAccordion({ label, items }: { label: string; items: NavItem[] }) 
   );
 }
 
-/** Three-line hamburger button */
 function HamburgerButton({ open, onClick }: { open: boolean; onClick: () => void }) {
   return (
     <button
@@ -124,18 +128,211 @@ function HamburgerButton({ open, onClick }: { open: boolean; onClick: () => void
   );
 }
 
+/** Shared language <select> used in both desktop nav and mobile drawer */
+function LangSelect({
+  className,
+  lang,
+  onChange,
+}: {
+  className: string;
+  lang: string;
+  onChange: (code: string) => void;
+}) {
+  return (
+    <select
+      className={className}
+      aria-label="Language selector"
+      value={lang}
+      onChange={e => onChange(e.target.value)}
+    >
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="zh">中文</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+    </select>
+  );
+}
+
 /* ============================================================
    Main Component
    ============================================================ */
-const Header = () => {
+const Header = ({ navOnly = false }: HeaderProps) => {
+
+  // ── UI state ──────────────────────────────────────────────
   const [isServiceOpen,  setIsServiceOpen]  = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMobileOpen,   setIsMobileOpen]   = useState(false);
 
+  // ── i18n — read from shared LanguageContext ─────────────────
+  const { lang, setLang, t } = useLanguage();
+
+  // ── Auth state ────────────────────────────────────────────
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push('/login');
+  };
+
+  // ── Shared JSX blocks (used by both navOnly and full-header) ──
+
+  const desktopNav = (
+    <div className={styles.navLinks}>
+      <a href="/" className={styles.navLink}>
+        {t['nav.home'] || 'Home'}
+      </a>
+
+      {/* Service dropdown */}
+      <div
+        className={styles.dropdownWrapper}
+        onMouseEnter={() => setIsServiceOpen(true)}
+        onMouseLeave={() => setIsServiceOpen(false)}
+      >
+        <button className={styles.dropdownTrigger} aria-haspopup="true" aria-expanded={isServiceOpen}>
+          <span>{t['nav.service'] || 'Service'}</span>
+          <Chevron open={isServiceOpen} />
+        </button>
+        <div
+          className={`${styles.dropdown} ${styles.dropdownService} ${isServiceOpen ? styles.dropdownOpen : ''}`}
+          role="menu"
+        >
+          <div className={styles.dropdownArrow} aria-hidden="true" />
+          <DropdownGrid items={services} />
+          <DropdownFooter
+            label={t['nav.view_all_services'] || 'View All Services'}
+            href="#all-services"
+          />
+        </div>
+      </div>
+
+      {/* Products dropdown */}
+      <div
+        className={styles.dropdownWrapper}
+        onMouseEnter={() => setIsProductsOpen(true)}
+        onMouseLeave={() => setIsProductsOpen(false)}
+      >
+        <button className={styles.dropdownTrigger} aria-haspopup="true" aria-expanded={isProductsOpen}>
+          <span>{t['nav.products'] || 'Products'}</span>
+          <Chevron open={isProductsOpen} />
+        </button>
+        <div
+          className={`${styles.dropdown} ${styles.dropdownProducts} ${isProductsOpen ? styles.dropdownOpen : ''}`}
+          role="menu"
+        >
+          <div className={styles.dropdownArrow} aria-hidden="true" />
+          <DropdownGrid items={products} />
+          <DropdownFooter
+            label={t['nav.view_all_products'] || 'View All Products'}
+            href="/products"
+          />
+        </div>
+      </div>
+
+      <a href="#pricing" className={styles.navLink}>{t['nav.pricing'] || 'Pricing'}</a>
+      <a href="#blog"    className={styles.navLink}>{t['nav.blog']    || 'Blog'}</a>
+      <a href="#about"   className={styles.navLink}>{t['nav.about']   || 'About Us'}</a>
+      <a href="#contact" className={styles.navLink}>{t['nav.contact'] || 'Contact Us'}</a>
+      <Link href="/admin" className={styles.navLink} style={{ color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '0.06em' }}>
+        {t['nav.admin'] || 'Admin'}
+      </Link>
+    </div>
+  );
+
+  // FIX 2: navRight is now a proper const with user-aware sign in/out button
+  const navRight = (
+    <div className={styles.navRight}>
+      <LangSelect className={styles.langSelect} lang={lang} onChange={setLang} />
+      {user ? (
+        <button onClick={handleSignOut} className={styles.signInLink}>
+          {t['nav.sign_out'] || 'Sign Out'}
+        </button>
+      ) : (
+        <Link href="/signup" className={styles.signInLink}>
+          {t['nav.sign_in'] || 'Sign In / Register'}
+        </Link>
+      )}
+      <HamburgerButton open={isMobileOpen} onClick={() => setIsMobileOpen(prev => !prev)} />
+    </div>
+  );
+
+  // FIX 3: Mobile drawer sign-in link is now user-aware
+  const mobileDrawer = (
+    <div
+      className={`${styles.mobileMenu} ${isMobileOpen ? styles.mobileMenuVisible : ''}`}
+      aria-hidden={!isMobileOpen}
+    >
+      <a href="/" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>
+        {t['nav.home'] || 'Home'}
+      </a>
+      <MobileAccordion label={t['nav.service']  || 'Service'}  items={services} />
+      <MobileAccordion label={t['nav.products'] || 'Products'} items={products} />
+      <a href="#pricing" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>
+        {t['nav.pricing'] || 'Pricing'}
+      </a>
+      <a href="#blog" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>
+        {t['nav.blog'] || 'Blog'}
+      </a>
+      <a href="#about" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>
+        {t['nav.about'] || 'About Us'}
+      </a>
+      <a href="#contact" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>
+        {t['nav.contact'] || 'Contact Us'}
+      </a>
+      <Link href="/admin" className={styles.mobileNavLink} style={{ color: 'var(--color-accent)', fontWeight: 600 }} onClick={() => setIsMobileOpen(false)}>
+        {t['nav.admin'] || 'Admin'}
+      </Link>
+      <div className={styles.mobileActions}>
+        <LangSelect className={styles.mobileLangSelect} lang={lang} onChange={setLang} />
+        {user ? (
+          <button onClick={handleSignOut} className={styles.mobileSignIn}>
+            {t['nav.sign_out'] || 'Sign Out'}
+          </button>
+        ) : (
+          <Link href="/signup" className={styles.mobileSignIn} onClick={() => setIsMobileOpen(false)}>
+            {t['nav.sign_in'] || 'Sign In / Register'}
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+
+  /* ── navOnly: just the sticky nav bar, no hero ── */
+  if (navOnly) {
+    return (
+      <>
+        <nav className={styles.nav} role="navigation" aria-label="Main navigation">
+          <div className={styles.navInner}>
+            <div className={styles.navRow}>
+              <div className={styles.logo} aria-label="Your Logo">Your Logo</div>
+              {desktopNav}
+              {navRight}
+            </div>
+          </div>
+        </nav>
+        {mobileDrawer}
+      </>
+    );
+  }
+
+  /* ── Default: full header with background image + hero ── */
   return (
     <header className={styles.header}>
 
-      {/* ── Background image + overlay ── */}
+      {/* Background image + overlay */}
       <div className={styles.backgroundWrapper}>
         <Image
           src="/pexels-pixabay-159220.jpg"
@@ -147,131 +344,33 @@ const Header = () => {
         <div className={styles.backgroundOverlay} />
       </div>
 
-      {/* ── Navigation bar ── */}
+      {/* Navigation bar */}
       <nav className={styles.nav} role="navigation" aria-label="Main navigation">
         <div className={styles.navInner}>
           <div className={styles.navRow}>
-
-            {/* Logo */}
             <div className={styles.logo} aria-label="Your Logo">Your Logo</div>
-
-            {/* ── Desktop links (hidden on mobile) ── */}
-            <div className={styles.navLinks}>
-              <a href="#home" className={styles.navLink}>Home</a>
-
-              {/* Service dropdown */}
-              <div
-                className={styles.dropdownWrapper}
-                onMouseEnter={() => setIsServiceOpen(true)}
-                onMouseLeave={() => setIsServiceOpen(false)}
-              >
-                <button
-                  className={styles.dropdownTrigger}
-                  aria-haspopup="true"
-                  aria-expanded={isServiceOpen}
-                >
-                  <span>Service</span>
-                  <Chevron open={isServiceOpen} />
-                </button>
-                <div
-                  className={`${styles.dropdown} ${styles.dropdownService} ${isServiceOpen ? styles.dropdownOpen : ''}`}
-                  role="menu"
-                >
-                  <div className={styles.dropdownArrow} aria-hidden="true" />
-                  <DropdownGrid items={services} />
-                  <DropdownFooter label="View All Services" href="#all-services" />
-                </div>
-              </div>
-
-              {/* Products dropdown */}
-              <div
-                className={styles.dropdownWrapper}
-                onMouseEnter={() => setIsProductsOpen(true)}
-                onMouseLeave={() => setIsProductsOpen(false)}
-              >
-                <button
-                  className={styles.dropdownTrigger}
-                  aria-haspopup="true"
-                  aria-expanded={isProductsOpen}
-                >
-                  <span>Products</span>
-                  <Chevron open={isProductsOpen} />
-                </button>
-                <div
-                  className={`${styles.dropdown} ${styles.dropdownProducts} ${isProductsOpen ? styles.dropdownOpen : ''}`}
-                  role="menu"
-                >
-                  <div className={styles.dropdownArrow} aria-hidden="true" />
-                  <DropdownGrid items={products} />
-                  <DropdownFooter label="View All Products" href="#all-products" />
-                </div>
-              </div>
-
-              <a href="#pricing" className={styles.navLink}>Pricing</a>
-              <a href="#blog"    className={styles.navLink}>Blog</a>
-              <a href="#about"   className={styles.navLink}>About Us</a>
-              <a href="#contact" className={styles.navLink}>Contact Us</a>
-            </div>
-
-            {/* ── Right side: lang + auth (desktop) + hamburger (mobile) ── */}
-            <div className={styles.navRight}>
-              {/* Language + sign-in hidden on mobile (shown in mobile menu instead) */}
-              <select className={styles.langSelect} aria-label="Language selector">
-                <option>English</option>
-                <option>Spanish</option>
-                <option>French</option>
-              </select>
-              <Link href="/signup" className={styles.signInLink}>
-                Sign In / Register
-              </Link>
-
-              {/* Hamburger — visible only on mobile */}
-              <HamburgerButton
-                open={isMobileOpen}
-                onClick={() => setIsMobileOpen(prev => !prev)}
-              />
-            </div>
-
+            {desktopNav}
+            {navRight}
           </div>
         </div>
       </nav>
 
-      {/* ── Mobile drawer menu ── */}
-      <div
-        className={`${styles.mobileMenu} ${isMobileOpen ? styles.mobileMenuVisible : ''}`}
-        aria-hidden={!isMobileOpen}
-      >
-        <a href="#home"    className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>Home</a>
-        <MobileAccordion label="Service"  items={services} />
-        <MobileAccordion label="Products" items={products} />
-        <a href="#pricing" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>Pricing</a>
-        <a href="#blog"    className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>Blog</a>
-        <a href="#about"   className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>About Us</a>
-        <a href="#contact" className={styles.mobileNavLink} onClick={() => setIsMobileOpen(false)}>Contact Us</a>
+      {/* Mobile drawer */}
+      {mobileDrawer}
 
-        <div className={styles.mobileActions}>
-          <select className={styles.mobileLangSelect} aria-label="Language selector">
-            <option>English</option>
-            <option>Spanish</option>
-            <option>French</option>
-          </select>
-          <Link href="/signup" className={styles.mobileSignIn} onClick={() => setIsMobileOpen(false)}>
-            Sign In / Register
-          </Link>
-        </div>
-      </div>
-
-      {/* ── Hero content ── */}
+      {/* Hero content */}
       <div className={styles.heroContent}>
-        <h2 className={styles.heroSubtitle}>Your Services</h2>
+        <h2 className={styles.heroSubtitle}>
+          {t['hero.eyebrow'] || 'Your Services'}
+        </h2>
         <h1 className={styles.heroTitle}>
-          'Decode your limits with our carefully crafted products.'
+          {t['hero.title'] || "Decode your limits with our carefully crafted products."}
         </h1>
         <p className={styles.heroBody}>
-          Whenever you want a part for your work or engineering, we make it happen.
+          {t['hero.body'] || 'Whenever you want a part for your work or engineering, we make it happen.'}
         </p>
         <button className={styles.heroButton} type="button">
-          <span>Apply Now</span>
+          <span>{t['hero.cta'] || 'Apply Now'}</span>
           <svg className={styles.heroButtonIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>

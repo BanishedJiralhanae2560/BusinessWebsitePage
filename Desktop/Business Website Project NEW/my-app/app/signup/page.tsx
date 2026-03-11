@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.css';
+import { createClient } from '@/lib/supabase/client';
 
 /* ============================================================
    Feature data for branding panel
@@ -48,7 +50,41 @@ function CheckIcon() {
    Main Component
    ============================================================ */
 const SignUpPage = () => {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    const supabase = createClient();
+
+    if (isLogin) {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) setError(error.message);
+      else router.push('/');
+    } else {
+      if (password !== confirmPassword) {
+        setError('Passwords do not match');
+        setLoading(false);
+        return;
+      }
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: fullName } },
+      });
+      if (error) setError(error.message);
+      else setError('Check your email to confirm your account!');
+    }
+    setLoading(false);
+  };
 
   return (
     <div className={styles.page}>
@@ -102,11 +138,12 @@ const SignUpPage = () => {
           </div>
 
           {/* Form */}
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             {!isLogin && (
               <div className={styles.fieldGroup}>
                 <label className={styles.label}>Full Name</label>
                 <input
+                  value={fullName} onChange={e => setFullName(e.target.value)}
                   type="text"
                   placeholder="John Doe"
                   className={styles.input}
@@ -118,6 +155,7 @@ const SignUpPage = () => {
             <div className={styles.fieldGroup}>
               <label className={styles.label}>Email Address</label>
               <input
+                value={email} onChange={e => setEmail(e.target.value)}
                 type="email"
                 placeholder="you@example.com"
                 className={styles.input}
@@ -128,6 +166,7 @@ const SignUpPage = () => {
             <div className={styles.fieldGroup}>
               <label className={styles.label}>Password</label>
               <input
+                value={password} onChange={e => setPassword(e.target.value)}
                 type="password"
                 placeholder="••••••••"
                 className={styles.input}
@@ -139,6 +178,7 @@ const SignUpPage = () => {
               <div className={styles.fieldGroup}>
                 <label className={styles.label}>Confirm Password</label>
                 <input
+                  value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                   type="password"
                   placeholder="••••••••"
                   className={styles.input}
@@ -169,11 +209,18 @@ const SignUpPage = () => {
               </div>
             )}
 
-            <Link href="/">
-              <button type="button" className={styles.submitBtn}>
-                {isLogin ? 'Sign In' : 'Create Account'}
-              </button>
-            </Link>
+            {error && (
+              <p style={{
+                color: error.includes('Check your email') ? 'green' : 'red',
+                fontSize: '0.875rem'
+              }}>
+                {error}
+              </p>
+            )}
+
+            <button type="submit" className={styles.submitBtn} disabled={loading}>
+              {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
+            </button>
           </form>
 
           {/* Toggle */}
