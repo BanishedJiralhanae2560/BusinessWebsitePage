@@ -185,7 +185,7 @@ const Header = ({ navOnly = false }: HeaderProps) => {
     const supabase = createClient();
     await supabase.auth.signOut();
     setUser(null);
-    router.push('/login');
+    router.push('/signup'); // ← change '/login' to '/signup'
   };
 
   // ── Shared JSX blocks (used by both navOnly and full-header) ──

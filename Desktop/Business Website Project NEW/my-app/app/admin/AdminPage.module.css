@@ -556,3 +556,353 @@
 @media (max-width: 480px) {
   .statsGrid { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   ADD THESE TO THE BOTTOM OF YOUR AdminPage.module.css
+   ============================================================ */
+
+/* ── Mini stat row (used in Orders, Products, Customers, Inventory) ── */
+.miniStatsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.miniStatCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+}
+
+.miniStatValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.15rem;
+  letter-spacing: -0.03em;
+}
+
+.miniStatLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.15rem;
+}
+
+.miniStatSub {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Filter row ── */
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  flex: 1;
+  min-width: 200px;
+  color: var(--color-text-muted);
+}
+
+.searchInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-muted);
+}
+
+.filterGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filterSelect {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  outline: none;
+  cursor: pointer;
+}
+
+/* ── Panel meta text ── */
+.panelMeta {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Table actions ── */
+.tableActions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tableActionBtn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.72rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.tableActionBtn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.tableActionBtnDanger:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+/* ── Pagination ── */
+.tablePagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.paginationInfo {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.paginationBtns {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.paginationBtn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.paginationBtn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.paginationBtnActive {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* ── Settings ── */
+.settingsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.settingsPanel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.settingsPanelHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  color: var(--color-text-muted);
+}
+
+.settingsPanelTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.settingsFields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.settingsField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.settingsLabel {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.settingsInput {
+  background: var(--color-bg, #0f0f0f);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.settingsInput:focus {
+  border-color: var(--color-accent);
+}
+
+.settingsTextarea {
+  background: var(--color-bg, #0f0f0f);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.settingsTextarea:focus {
+  border-color: var(--color-accent);
+}
+
+.settingsToggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.settingsToggleRow:last-child {
+  border-bottom: none;
+}
+
+.settingsToggleLabel {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 0.15rem;
+}
+
+.settingsToggleDesc {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Toggle switch */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.toggleSlider::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle input:checked + .toggleSlider {
+  background: var(--color-accent);
+}
+
+.toggle input:checked + .toggleSlider::before {
+  transform: translateX(16px);
+}
+
+.settingsSaveRow {
+  display: flex;
+  gap: 0.75rem;
+  padding-bottom: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .miniStatsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .settingsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .miniStatsRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filterRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filterGroup {
+    flex-wrap: wrap;
+  }
+}
