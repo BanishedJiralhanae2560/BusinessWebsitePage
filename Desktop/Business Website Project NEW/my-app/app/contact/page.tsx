@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import Header from '@/app/components/Header/Header';
-import Link from 'next/link';
-import { createClient } from '@/lib/supabase/client';
 import styles from './page.module.css';
 
 /* ============================================================
@@ -77,9 +75,9 @@ const ContactPage = () => {
   const [form, setForm] = useState({
     name: '', email: '', phone: '', subject: '', message: '',
   });
-  const [loading, setLoading]   = useState(false);
-  const [success, setSuccess]   = useState(false);
-  const [error,   setError]     = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error,   setError]   = useState('');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -91,35 +89,33 @@ const ContactPage = () => {
     e.preventDefault();
     setError('');
 
-    if (!form.name.trim())    { setError('Please enter your name.');    return; }
-    if (!form.email.trim() && !form.phone.trim()) {
-      setError('Please provide at least an email or phone number.');
-      return;
-    }
-    if (!form.subject)        { setError('Please select a subject.');   return; }
-    if (!form.message.trim()) { setError('Please enter your message.'); return; }
+    /* Client-side validation */
+    if (!form.name.trim())                          { setError('Please enter your name.');                              return; }
+    if (!form.email.trim() && !form.phone.trim())   { setError('Please provide at least an email or phone number.');   return; }
+    if (!form.subject)                              { setError('Please select a subject.');                             return; }
+    if (!form.message.trim())                       { setError('Please enter your message.');                          return; }
 
     setLoading(true);
-    const supabase = createClient();
 
-    const { error: dbError } = await supabase
-      .from('contact_submissions')
-      .insert([{
-        name:    form.name.trim(),
-        email:   form.email.trim() || null,
-        phone:   form.phone.trim() || null,
-        subject: form.subject,
-        message: form.message.trim(),
-      }]);
+    try {
+      const res = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(form),
+      });
 
-    setLoading(false);
+      const data = await res.json();
 
-    if (dbError) {
-      setError('Something went wrong. Please try again.');
-      console.error(dbError);
-    } else {
-      setSuccess(true);
-      setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+      if (!res.ok) {
+        setError(data.error ?? 'Something went wrong. Please try again.');
+      } else {
+        setSuccess(true);
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+      }
+    } catch {
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -235,7 +231,10 @@ const ContactPage = () => {
                   </svg>
                   <div>
                     <p className={styles.successTitle}>Message sent!</p>
-                    <p className={styles.successSub}>Thank you — we'll be in touch within 24 hours.</p>
+                    <p className={styles.successSub}>
+                      Thank you — we'll be in touch within 24 hours.
+                      {form.email && ' A confirmation has been sent to your email.'}
+                    </p>
                   </div>
                   <button className={styles.successReset} onClick={() => setSuccess(false)}>
                     Send another
@@ -245,7 +244,9 @@ const ContactPage = () => {
                 <form className={styles.form} onSubmit={handleSubmit}>
                   {/* Name */}
                   <div className={styles.fieldGroup}>
-                    <label className={styles.label}>Full Name <span className={styles.required}>*</span></label>
+                    <label className={styles.label}>
+                      Full Name <span className={styles.required}>*</span>
+                    </label>
                     <input
                       name="name" type="text" placeholder="John Doe"
                       value={form.name} onChange={handleChange}
@@ -276,7 +277,9 @@ const ContactPage = () => {
 
                   {/* Subject */}
                   <div className={styles.fieldGroup}>
-                    <label className={styles.label}>Subject <span className={styles.required}>*</span></label>
+                    <label className={styles.label}>
+                      Subject <span className={styles.required}>*</span>
+                    </label>
                     <select
                       name="subject" value={form.subject} onChange={handleChange}
                       className={styles.select}
@@ -288,7 +291,9 @@ const ContactPage = () => {
 
                   {/* Message */}
                   <div className={styles.fieldGroup}>
-                    <label className={styles.label}>Message <span className={styles.required}>*</span></label>
+                    <label className={styles.label}>
+                      Message <span className={styles.required}>*</span>
+                    </label>
                     <textarea
                       name="message" placeholder="Tell us how we can help…"
                       value={form.message} onChange={handleChange}

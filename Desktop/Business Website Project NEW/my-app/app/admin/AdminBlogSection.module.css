@@ -1,0 +1,581 @@
+/* ============================================================
+   AdminBlogSection.module.css
+   Place in: app/admin/AdminBlogSection.module.css
+   ============================================================ */
+
+/* ── Form layout: 2-col (content | sidebar) ── */
+.formLayout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.formMain {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Form block (numbered section) ── */
+.formBlock {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.formBlockHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--color-border, #222);
+}
+
+.formBlockNum {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-accent, #22c55e);
+  font-family: monospace;
+}
+
+.formBlockTitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+}
+
+.formBlockHint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #888);
+  margin-left: auto;
+  text-align: right;
+  max-width: 200px;
+}
+
+/* ── Label row (label + counter) ── */
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Word / char counter ── */
+.counter {
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #666);
+  font-family: monospace;
+  flex-shrink: 0;
+}
+
+/* ── Slug field ── */
+.slugHint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+  font-weight: 400;
+}
+
+.slugWrap {
+  display: flex;
+  align-items: center;
+  background: var(--color-bg, #0a0a0a);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.slugWrap:focus-within {
+  border-color: var(--color-accent, #22c55e);
+}
+
+.slugPrefix {
+  padding: 0.6rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #666);
+  background: var(--color-surface, #111);
+  border-right: 1px solid var(--color-border, #222);
+  font-family: monospace;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.slugInput {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  flex: 1;
+}
+
+/* ── Body section field ── */
+.sectionField {
+  background: var(--color-bg, #0a0a0a);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 10px;
+  padding: 1.1rem;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.15s;
+}
+
+.sectionField:focus-within {
+  border-color: rgba(34,197,94,0.4);
+}
+
+.sectionFieldHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.sectionFieldLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #888);
+}
+
+.sectionFieldPreview {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-text, #f0f0f0);
+}
+
+.sectionFieldActions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.sectionMoveBtn {
+  background: transparent;
+  border: 1px solid var(--color-border, #222);
+  border-radius: 5px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #888);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sectionMoveBtn:hover:not(:disabled) {
+  border-color: var(--color-accent, #22c55e);
+  color: var(--color-accent, #22c55e);
+}
+
+.sectionMoveBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.sectionRemoveBtn {
+  background: transparent;
+  border: 1px solid var(--color-border, #222);
+  border-radius: 5px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #888);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sectionRemoveBtn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* ── Add section button ── */
+.addSectionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--color-border, #333);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #888);
+  cursor: pointer;
+  transition: all 0.15s;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.addSectionBtn:hover {
+  border-color: var(--color-accent, #22c55e);
+  color: var(--color-accent, #22c55e);
+}
+
+/* ── Sidebar ── */
+.formSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 6rem;
+}
+
+.sidebarPanel {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.sidebarPanelTitle {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--color-border, #222);
+  letter-spacing: 0.02em;
+}
+
+.publishToggleRow {
+  margin-top: 0.25rem;
+}
+
+/* ── Field note ── */
+.fieldNote {
+  font-size: 0.68rem;
+  color: var(--color-text-muted, #666);
+  margin: 0.3rem 0 0;
+}
+
+/* ── Tag preview ── */
+.tagPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.tagChip {
+  font-size: 0.65rem;
+  color: var(--color-accent, #22c55e);
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.2);
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+}
+
+/* ── Checklist ── */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #666);
+  transition: color 0.15s;
+}
+
+.checklistItemDone {
+  color: var(--color-text, #f0f0f0);
+}
+
+.checklistDot {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-border, #444);
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.checklistItemDone .checklistDot {
+  color: var(--color-accent, #22c55e);
+}
+
+/* ── Word count bar ── */
+.wordCountBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.75rem;
+}
+
+.wordCountText {
+  color: var(--color-text-muted, #888);
+}
+
+.wordCountText strong {
+  color: var(--color-text, #f0f0f0);
+}
+
+.wordCountSections {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+  font-family: monospace;
+}
+
+/* ── Feedback message ── */
+.feedback {
+  font-size: 0.82rem;
+  margin: 0 0 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--color-surface, #111);
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #222);
+}
+
+/* ── Save Draft button ── */
+.btnDraft {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--color-border, #333);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btnDraft:hover:not(:disabled) {
+  border-color: #eab308;
+  color: #eab308;
+}
+
+.btnDraft:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Preview toggle button ── */
+.previewToggle {
+  background: transparent;
+  border: 1px solid var(--color-border, #333);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #888);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.previewToggle:hover {
+  border-color: var(--color-accent, #22c55e);
+  color: var(--color-accent, #22c55e);
+}
+
+/* ── Preview panel ── */
+.previewWrapper {
+  margin-top: 2rem;
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.previewLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-surface, #111);
+  border-bottom: 1px solid var(--color-border, #222);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #888);
+}
+
+.preview {
+  background: var(--color-bg, #0a0a0a);
+  padding: 2.5rem 3rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.previewHeader { margin-bottom: 1.5rem; }
+
+.previewCategory {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent, #22c55e);
+  background: rgba(34,197,94,0.08);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.previewTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+.previewExcerpt {
+  font-size: 1rem;
+  color: var(--color-text-muted, #aaa);
+  line-height: 1.6;
+  margin: 0 0 1rem;
+  font-style: italic;
+}
+
+.previewMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #888);
+  flex-wrap: wrap;
+}
+
+.previewMetaDot { color: var(--color-border, #444); }
+
+.previewDivider {
+  border: none;
+  border-top: 1px solid var(--color-border, #222);
+  margin: 1.5rem 0;
+}
+
+.previewIntro {
+  font-size: 0.95rem;
+  color: var(--color-text, #ddd);
+  line-height: 1.8;
+  margin: 0 0 1.5rem;
+}
+
+.previewSection { margin-bottom: 1.5rem; }
+
+.previewSectionHeading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6rem;
+}
+
+.previewSectionBody {
+  font-size: 0.88rem;
+  color: var(--color-text-muted, #aaa);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.previewEmpty {
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #666);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* ── Delete Draft button ── */
+.btnDeleteDraft {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--color-border, #333);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #888);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btnDeleteDraft:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* ── Image upload dropzone ── */
+.bannerDropzone {
+  border: 2px dashed var(--color-border, rgba(74,222,128,0.2));
+  border-radius: 10px;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+  background: rgba(0,0,0,0.2);
+}
+
+.bannerDropzone:hover {
+  border-color: var(--color-accent, #22c55e);
+  background: rgba(34,197,94,0.04);
+}
+
+.bannerDropzoneText {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #888);
+  margin: 0;
+}
+
+.bannerDropzoneText strong {
+  color: var(--color-accent, #22c55e);
+}
+
+.bannerDropzoneHint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #666);
+  margin: 0;
+}
+
+/* ── Save status indicator ── */
+.saveStatus {
+  min-height: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.saveStatusUnsaved {
+  font-size: 0.72rem;
+  color: #eab308;
+  font-weight: 500;
+}
+
+.saveStatusSaved {
+  font-size: 0.72rem;
+  color: var(--color-accent, #22c55e);
+  font-weight: 500;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+  .formLayout  { grid-template-columns: 1fr; }
+  .formSidebar { position: static; }
+}
+
+@media (max-width: 600px) {
+  .preview       { padding: 1.5rem; }
+  .formBlockHint { display: none; }
+}

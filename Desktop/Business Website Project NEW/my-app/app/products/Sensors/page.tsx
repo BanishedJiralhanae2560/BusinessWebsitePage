@@ -1,42 +1,25 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '@/app/products/ProductCatalog.module.css';
 import Header from '@/app/components/Header/Header';
 import { useLanguage } from '@/app/components/Header/LanguageContext';
-
-interface CatalogProduct {
-  id:            number;
-  name:          string;
-  category:      string;
-  price:         number;
-  originalPrice: number;
-  rating:        number;
-  reviewCount:   number;
-  badge?:        'NEW' | 'SALE' | 'HOT' | 'LOW STOCK';
-  inStock:       boolean;
-  description:   string;
-}
+import { CatalogProduct, fetchCatalogProducts } from '@/app/products/productsApi';
 
 type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
 
-const ALL_PRODUCTS: CatalogProduct[] = [
-  { id: 1,  name: 'Product Name', category: 'Circuit Boards',          price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: 'NEW',       inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 2,  name: 'Product Name', category: 'Microchips & Processors', price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: 'SALE',      inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 3,  name: 'Product Name', category: 'Sensors & Components',    price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: 'HOT',       inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 4,  name: 'Product Name', category: 'Development Kits',        price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: undefined,   inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 5,  name: 'Product Name', category: 'Custom Solutions',        price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: 'LOW STOCK', inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 6,  name: 'Product Name', category: 'Bulk Orders',             price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: undefined,   inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 7,  name: 'Product Name', category: 'Sensors & Components',             price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: 'NEW',       inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 8,  name: 'Product Name', category: 'Sensors & Components',             price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: undefined,   inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 9,  name: 'Product Name', category: 'Sensors & Components',             price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: undefined,   inStock: false, description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 10, name: 'Product Name', category: 'Circuit Boards',          price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: 'SALE',      inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 11, name: 'Product Name', category: 'Sensors & Components',    price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: undefined,   inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-  { id: 12, name: 'Product Name', category: 'Bulk Orders',             price: 0.00, originalPrice: 0.00, rating: 0, reviewCount: 0, badge: undefined,   inStock: true,  description: 'Short product description goes here. Highlight key features or benefits in one to two sentences.' },
-];
+const ALL_PRODUCTS: CatalogProduct[] = [];
 
-const CATEGORIES = ['All', ...Array.from(new Set(ALL_PRODUCTS.map(p => p.category)))];
+const CATEGORIES = [
+  'All',
+  'Circuit Boards',
+  'Microchips & Processors',
+  'Sensors & Components',
+  'Development Kits',
+  'Custom Solutions',
+  'Bulk Orders',
+];
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -146,8 +129,65 @@ const SensorsPage: React.FC = () => {
     'Bulk Orders':             t['catalog.cat.bulk']          || 'Bulk Orders',
   };
 
+  const [products, setProducts] = useState<CatalogProduct[]>(ALL_PRODUCTS);
+
+  useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      try {
+        const fetched = await fetchCatalogProducts();
+        if (!mounted) return;
+        setProducts(fetched);
+        try { localStorage.setItem('catalog_products', JSON.stringify(fetched)); } catch (e) {}
+      } catch (err) {
+        try {
+          const raw = localStorage.getItem('catalog_products');
+          if (raw) {
+            const parsed = JSON.parse(raw) as CatalogProduct[];
+            if (Array.isArray(parsed)) {
+              setProducts(parsed);
+            }
+          }
+        } catch (err) {
+          // ignore
+        }
+      }
+    })();
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'catalog_products') {
+        try {
+          const parsed = JSON.parse(e.newValue || '[]') as CatalogProduct[];
+          if (Array.isArray(parsed)) setProducts(parsed);
+        } catch (err) {
+          // ignore
+        }
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => { mounted = false; window.removeEventListener('storage', onStorage); };
+  }, []);
+
+  const categories = useMemo(() => {
+    const dynamicCategories = products
+      .map(p => p.category?.trim())
+      .filter(Boolean);
+
+    const merged = [
+      ...CATEGORIES,
+      ...dynamicCategories,
+    ];
+
+    if (activeCategory && activeCategory !== 'All' && !merged.includes(activeCategory)) {
+      merged.push(activeCategory);
+    }
+
+    return Array.from(new Set(merged));
+  }, [products, activeCategory]);
+
   const filtered = useMemo(() => {
-    let list = [...ALL_PRODUCTS];
+    let list = [...products];
     if (activeCategory !== 'All') list = list.filter(p => p.category === activeCategory);
     if (search.trim()) list = list.filter(p =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -233,7 +273,7 @@ const SensorsPage: React.FC = () => {
       </div>
 
       <div className={styles.categoryRow}>
-        {CATEGORIES.map(cat => (
+        {categories.map(cat => (
           <button
             key={cat}
             className={`${styles.catTab} ${activeCategory === cat ? styles.catTabActive : ''}`}

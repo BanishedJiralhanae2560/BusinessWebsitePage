@@ -1,0 +1,167 @@
+/*
+ * app/admin/login/login.module.css
+ * Matches the dark admin aesthetic in AdminPage.module.css
+ */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg, #0a0a0a);
+  padding: 2rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--color-surface, #111111);
+  border: 1px solid var(--color-border, #1f1f1f);
+  border-radius: 12px;
+  padding: 2.5rem;
+}
+
+.cardHeader {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  color: var(--color-accent, #e8ff00);
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #666);
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input {
+  background: var(--color-bg, #0a0a0a);
+  border: 1px solid var(--color-border, #1f1f1f);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  color: var(--color-text, #f0f0f0);
+  outline: none;
+  transition: border-color 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted, #444);
+}
+
+.input:focus {
+  border-color: var(--color-accent, #e8ff00);
+}
+
+.error {
+  font-size: 0.8rem;
+  color: #ef4444;
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
+}
+
+.btn {
+  margin-top: 0.25rem;
+  background: var(--color-accent, #e8ff00);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  width: 100%;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.contactNote {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border, #1f1f1f);
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #555);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.backBtn {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: none;
+  border: none;
+  color: #aaa;         /* match your theme */
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s;
+}
+.backBtn:hover {
+  color: #fff;         /* or your accent colour */
+}
+
+.joinBtn {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #ccc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.joinBtn:hover {
+  border-color: #fff;
+  color: #fff;
+}

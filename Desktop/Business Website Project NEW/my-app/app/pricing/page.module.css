@@ -1,0 +1,516 @@
+/* ============================================================
+   Pricing Page — page.module.css
+   Matches existing dark design system (CSS variables)
+   ============================================================ */
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg, #0a0a0a);
+  color: var(--color-text, #f0f0f0);
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #888);
+}
+
+.breadcrumbLink {
+  color: var(--color-text-muted, #888);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumbLink:hover { color: var(--color-accent, #22c55e); }
+
+.breadcrumbSep     { color: var(--color-border, #333); }
+.breadcrumbCurrent { color: var(--color-text, #f0f0f0); }
+
+/* ── Hero Banner ── */
+.heroBanner {
+  background: var(--color-surface, #111);
+  border-bottom: 1px solid var(--color-border, #222);
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(34,197,94,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.heroInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.heroIconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--color-bg, #0a0a0a);
+  border: 1px solid var(--color-border, #222);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent, #22c55e);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.heroEyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--color-accent, #22c55e);
+  text-transform: uppercase;
+  margin: 0 0 0.6rem;
+}
+
+.heroTitle {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.9rem;
+  line-height: 1.1;
+}
+
+.heroSub {
+  font-size: 0.95rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ── Content Wrapper ── */
+.contentWrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+
+/* ── Section headings ── */
+.sectionEyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent, #22c55e);
+  margin: 0 0 0.5rem;
+}
+
+.sectionHeading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.sectionSub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.7;
+  margin: 0 0 1.75rem;
+  max-width: 600px;
+}
+
+.sectionDivider {
+  border: none;
+  border-top: 1px solid var(--color-border, #222);
+  margin: 3.5rem 0;
+}
+
+/* ── Category filter tabs ── */
+.filterTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filterTab {
+  background: transparent;
+  border: 1px solid var(--color-border, #222);
+  border-radius: 99px;
+  padding: 0.4rem 1rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #888);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.filterTab:hover {
+  border-color: var(--color-accent, #22c55e);
+  color: var(--color-text, #f0f0f0);
+}
+
+.filterTabActive {
+  background: var(--color-accent, #22c55e);
+  border-color: var(--color-accent, #22c55e);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ── Category tables ── */
+.categoryTables {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.categoryBlock {}
+
+.categoryHeader {
+  margin-bottom: 0.75rem;
+}
+
+.categoryEyebrow {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent, #22c55e);
+  margin: 0 0 0.2rem;
+}
+
+.categoryName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  margin: 0;
+}
+
+/* ── Table ── */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.tableTh {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #888);
+  border-bottom: 1px solid var(--color-border, #222);
+  background: var(--color-surface, #111);
+  white-space: nowrap;
+}
+
+.tableThCenter { text-align: center; }
+
+.tableTr:not(:last-child) td {
+  border-bottom: 1px solid var(--color-border, #1a1a1a);
+}
+
+.tableTr:hover td { background: rgba(255,255,255,0.02); }
+
+.tableTd {
+  padding: 0.9rem 1rem;
+  color: var(--color-text, #f0f0f0);
+  background: var(--color-bg, #0a0a0a);
+}
+
+.tableTdCenter { text-align: center; }
+
+.tableProductName {
+  font-weight: 500;
+  color: var(--color-text, #f0f0f0);
+}
+
+.tableSku {
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: var(--color-text-muted, #888);
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+}
+
+.tablePrice {
+  font-weight: 700;
+  color: var(--color-accent, #22c55e);
+  font-size: 0.9rem;
+}
+
+.tableQuote {
+  font-weight: 600;
+  color: var(--color-text-muted, #888);
+  font-style: italic;
+}
+
+.tableLead {
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #888);
+}
+
+/* ── Bulk tier cards ── */
+.bulkTierGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 0;
+}
+
+.bulkTierCard {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.bulkTierCard:hover {
+  border-color: var(--color-accent, #22c55e);
+  transform: translateY(-2px);
+}
+
+.bulkTierCardFeatured {
+  border-color: var(--color-accent, #22c55e);
+  background: rgba(34,197,94,0.04);
+}
+
+.featuredBadge {
+  position: absolute;
+  top: -1px;
+  right: 1.25rem;
+  background: var(--color-accent, #22c55e);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0 0 6px 6px;
+}
+
+.bulkTierName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #888);
+  margin: 0 0 0.4rem;
+}
+
+.bulkTierMoq {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.bulkTierDiscount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-accent, #22c55e);
+  letter-spacing: -0.04em;
+  margin: 0 0 0.75rem;
+  line-height: 1;
+}
+
+.bulkTierDiscount span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-text-muted, #888);
+  letter-spacing: 0;
+}
+
+.bulkTierNotes {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── FAQ ── */
+.faqSection {
+  margin-bottom: 0;
+}
+
+.faqHeadingBlock {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.faqEyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent, #22c55e);
+  margin: 0 0 0.6rem;
+}
+
+.faqHeading {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.faqSub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #888);
+  margin: 0;
+}
+
+.faqLink {
+  color: var(--color-accent, #22c55e);
+  text-decoration: none;
+}
+
+.faqLink:hover { text-decoration: underline; }
+
+.faqList {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.faqItem {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.faqItemOpen { border-color: var(--color-accent, #22c55e); }
+
+.faqTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text, #f0f0f0);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faqChevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-text-muted, #888);
+  transition: transform 0.25s;
+}
+
+.faqChevronOpen { transform: rotate(180deg); }
+
+.faqBody {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faqBodyOpen { max-height: 300px; }
+
+.faqAnswer {
+  font-size: 0.84rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.7;
+  padding: 0 1.25rem 1.25rem;
+  margin: 0;
+}
+
+/* ── CTA Strip ── */
+.ctaStrip {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+
+.ctaTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.02em;
+}
+
+.ctaSub {
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #888);
+  margin: 0;
+}
+
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-accent, #22c55e);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.ctaBtn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .bulkTierGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .bulkTierGrid  { grid-template-columns: 1fr 1fr; }
+  .ctaStrip      { flex-direction: column; align-items: flex-start; }
+  .heroInner     { flex-direction: column; gap: 1rem; }
+  .heroBanner    { padding: 3rem 1.25rem 2rem; }
+  .contentWrap   { padding: 2rem 1.25rem 3rem; }
+  .filterTabs    { gap: 0.35rem; }
+}

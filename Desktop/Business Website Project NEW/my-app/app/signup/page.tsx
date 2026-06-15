@@ -86,6 +86,16 @@ const SignUpPage = () => {
     setLoading(false);
   };
 
+  const handleGuestSignIn = async () => {
+    setError('');
+    setLoading(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInAnonymously();
+    if (error) setError(error.message);
+    else router.push('/');
+    setLoading(false);
+  };
+
   return (
     <div className={styles.page}>
 
@@ -220,6 +230,15 @@ const SignUpPage = () => {
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
+            </button>
+
+            <button
+              type="button"
+              className={styles.guestBtn}
+              onClick={handleGuestSignIn}
+              disabled={loading}
+            >
+              {loading ? 'Please wait...' : 'Continue as Guest'}
             </button>
           </form>
 

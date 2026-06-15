@@ -1,0 +1,221 @@
+:root {
+  --homepage-bg: #050505;
+  --homepage-panel: #0c0c0c;
+  --homepage-border: rgba(74, 222, 128, 0.2);
+  --homepage-text: #e5e7eb;
+  --homepage-muted: #9ca3af;
+  --homepage-accent: #4ade80;
+  --homepage-accent-dark: #22c55e;
+  --homepage-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+}
+
+.homepage {
+  min-height: 100vh;
+  background-color: var(--homepage-bg);
+  color: var(--homepage-text);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+.homepageContent {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
+}
+
+.section {
+  margin-top: 4rem;
+}
+
+.section:first-of-type {
+  margin-top: 2.5rem;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.sectionEyebrow {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--homepage-accent);
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.sectionSubtitle {
+  max-width: 38rem;
+  color: var(--homepage-muted);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.categoryGrid,
+.valueGrid,
+.statsGrid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.categoryGrid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.categoryCard,
+.valueCard,
+.statCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--homepage-border);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: var(--homepage-shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.categoryCard:hover,
+.valueCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(74, 222, 128, 0.35);
+  background: rgba(74, 222, 128, 0.04);
+}
+
+.categoryIcon,
+.valueIcon {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--homepage-accent);
+  font-size: 1.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.categoryTitle,
+.valueTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.65rem;
+}
+
+.categoryDesc,
+.valueDesc,
+.statLabel {
+  margin: 0;
+  color: var(--homepage-muted);
+  line-height: 1.75;
+}
+
+.valueGrid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.statsGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.statCard {
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(74, 222, 128, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.statValue {
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  color: var(--homepage-accent);
+}
+
+.statLabel {
+  font-size: 0.92rem;
+}
+
+.ctaBanner {
+  margin-top: 4rem;
+  padding: 2.5rem 2rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(74, 222, 128, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ctaContent {
+  min-width: 0;
+}
+
+.ctaHeading {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  margin: 0 0 0.5rem;
+}
+
+.ctaText {
+  color: var(--homepage-muted);
+  margin: 0;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.ctaButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ctaButton {
+  background: var(--homepage-accent);
+  color: #000;
+}
+
+.ctaButton:hover {
+  transform: translateY(-1px);
+  background: #86efac;
+}
+
+.secondaryButton {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--homepage-text);
+}
+
+.secondaryButton:hover {
+  transform: translateY(-1px);
+  border-color: var(--homepage-accent);
+}
+
+@media (max-width: 768px) {
+  .homepageContent {
+    padding: 2rem 0 4rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaBanner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

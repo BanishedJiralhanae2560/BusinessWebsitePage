@@ -1,0 +1,467 @@
+/* ============================================================
+   About Us Page — page.module.css
+   ============================================================ */
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg, #0a0a0a);
+  color: var(--color-text, #f0f0f0);
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #888);
+}
+.breadcrumbLink { color: var(--color-text-muted, #888); text-decoration: none; transition: color 0.15s; }
+.breadcrumbLink:hover { color: var(--color-accent, #22c55e); }
+.breadcrumbSep { color: var(--color-border, #333); }
+.breadcrumbCurrent { color: var(--color-text, #f0f0f0); }
+
+/* ── Hero ── */
+.heroBanner {
+  background: var(--color-surface, #111);
+  border-bottom: 1px solid var(--color-border, #222);
+  padding: 5rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(34,197,94,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.heroInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroEyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--color-accent, #22c55e);
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 1.25rem;
+  line-height: 1.1;
+}
+
+.heroSub {
+  font-size: 1rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.75;
+  margin: 0 0 2rem;
+  max-width: 580px;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.heroBtnPrimary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-accent, #22c55e);
+  color: #000;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.heroBtnPrimary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.heroBtnSecondary {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-border, #333);
+  color: var(--color-text, #f0f0f0);
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.heroBtnSecondary:hover { border-color: var(--color-accent, #22c55e); }
+
+/* ── Content wrapper ── */
+.contentWrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+
+/* ── Stat strip ── */
+.statStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--color-border, #222);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 3.5rem;
+}
+
+.statStripItem {
+  background: var(--color-surface, #111);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-accent, #22c55e);
+  letter-spacing: -0.04em;
+  margin: 0 0 0.2rem;
+}
+
+.statLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.15rem;
+}
+
+.statSub {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #888);
+  margin: 0;
+}
+
+/* ── Section helpers ── */
+.sectionEyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent, #22c55e);
+  margin: 0 0 0.5rem;
+}
+
+.sectionHeading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.sectionSub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.7;
+  margin: 0 0 1.75rem;
+  max-width: 560px;
+}
+
+.sectionBody {
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.8;
+  margin: 0 0 1rem;
+}
+
+.sectionDivider {
+  border: none;
+  border-top: 1px solid var(--color-border, #222);
+  margin: 3.5rem 0;
+}
+
+/* ── Mission block ── */
+.missionBlock {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 0;
+}
+
+.missionLeft {}
+.missionRight {}
+
+.missionCard {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 1.75rem;
+}
+
+.missionCardEyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent, #22c55e);
+  margin: 0 0 1rem;
+}
+
+.missionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.missionListItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.5;
+}
+
+/* ── Values grid ── */
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.valueCard {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.valueCard:hover {
+  border-color: var(--color-accent, #22c55e);
+  transform: translateY(-2px);
+}
+
+.valueIconWrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--color-bg, #0a0a0a);
+  border: 1px solid var(--color-border, #222);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent, #22c55e);
+  margin-bottom: 1rem;
+}
+
+.valueTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.4rem;
+}
+
+.valueDesc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Timeline ── */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px solid var(--color-border, #222);
+  margin-left: 4rem;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 0 0 2rem 1.5rem;
+  position: relative;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -0.6rem;
+  top: 0.35rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent, #22c55e);
+  border: 2px solid var(--color-bg, #0a0a0a);
+  flex-shrink: 0;
+}
+
+.timelineYear {
+  position: absolute;
+  left: -5.5rem;
+  top: 0.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent, #22c55e);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.timelineEvent {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #888);
+  line-height: 1.6;
+}
+
+/* ── Team grid ── */
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.teamCard {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.teamCard:hover { border-color: var(--color-accent, #22c55e); }
+
+.teamAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-bg, #0a0a0a);
+  border: 2px solid var(--color-border, #222);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.teamInitials {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent, #22c55e);
+  letter-spacing: 0.05em;
+}
+
+.teamName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.25rem;
+}
+
+.teamRole {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #888);
+  margin: 0;
+}
+
+/* ── CTA strip ── */
+.ctaStrip {
+  background: var(--color-surface, #111);
+  border: 1px solid var(--color-border, #222);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+
+.ctaTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text, #f0f0f0);
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.02em;
+}
+
+.ctaSub {
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #888);
+  margin: 0;
+}
+
+.ctaBtns {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.ctaBtnPrimary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-accent, #22c55e);
+  color: #000;
+  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.ctaBtnPrimary:hover { opacity: 0.88; }
+
+.ctaBtnSecondary {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-border, #333);
+  color: var(--color-text, #f0f0f0);
+  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+.ctaBtnSecondary:hover { border-color: var(--color-accent, #22c55e); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .missionBlock  { grid-template-columns: 1fr; }
+  .valuesGrid    { grid-template-columns: repeat(2, 1fr); }
+  .teamGrid      { grid-template-columns: repeat(2, 1fr); }
+  .statStrip     { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .valuesGrid  { grid-template-columns: 1fr; }
+  .teamGrid    { grid-template-columns: repeat(2, 1fr); }
+  .ctaStrip    { flex-direction: column; align-items: flex-start; }
+  .heroBanner  { padding: 3rem 1.25rem 2.5rem; }
+  .contentWrap { padding: 2rem 1.25rem 3rem; }
+  .timeline    { margin-left: 3rem; }
+}

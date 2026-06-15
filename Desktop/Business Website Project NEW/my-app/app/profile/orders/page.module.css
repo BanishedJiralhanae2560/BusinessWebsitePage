@@ -1,0 +1,296 @@
+/* ============================================================
+   My Orders — page.module.css
+   ============================================================ */
+
+.page {
+  --color-bg:         #0a0a0a;
+  --color-text:       #f0f0f0;
+  --color-text-muted: #888;
+  --color-surface:    #111;
+  --color-border:     #222;
+  --color-accent:     #22c55e;
+  --color-accent-dim: rgba(34, 197, 94, 0.08);
+
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+/* ── Loading ── */
+.loadingState {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1rem; padding: 8rem 0;
+  color: var(--color-text-muted); font-size: 0.85rem;
+}
+.loadingSpinner {
+  width: 28px; height: 28px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  max-width: 1200px; margin: 0 auto;
+  padding: 1rem 2rem 0;
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; color: var(--color-text-muted);
+}
+.breadcrumbLink { color: var(--color-text-muted); text-decoration: none; transition: color 0.15s; }
+.breadcrumbLink:hover { color: var(--color-accent); }
+.breadcrumbSep { color: var(--color-border); }
+.breadcrumbCurrent { color: var(--color-text); }
+
+/* ── Hero ── */
+.heroBanner {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 4rem 2rem 3rem;
+  position: relative; overflow: hidden;
+}
+.heroBanner::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(34,197,94,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.heroInner { max-width: 1200px; margin: 0 auto; }
+.heroEyebrow {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--color-accent); margin: 0 0 0.6rem;
+}
+.heroTitle {
+  font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700;
+  letter-spacing: -0.03em; color: var(--color-text);
+  margin: 0 0 0.9rem; line-height: 1.1;
+}
+.heroSub {
+  font-size: 0.95rem; color: var(--color-text-muted);
+  line-height: 1.7; margin: 0; max-width: 520px;
+}
+
+/* ── Content ── */
+.contentWrap {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+}
+
+/* ── Stats row ── */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.statCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+.statNum {
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.statNumAccent { color: var(--color-accent); }
+.statLabel {
+  font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--color-text-muted);
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex; flex-direction: column;
+  gap: 1rem; margin-bottom: 1.25rem;
+}
+
+.searchBar {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px; padding: 0.65rem 1rem;
+  color: var(--color-text-muted); max-width: 480px;
+  transition: border-color 0.15s;
+}
+.searchBar:focus-within { border-color: var(--color-accent); }
+.searchInput {
+  background: transparent; border: none; outline: none;
+  font-size: 0.85rem; color: var(--color-text); flex: 1;
+  font-family: inherit;
+}
+.searchInput::placeholder { color: var(--color-text-muted); }
+.searchClear {
+  background: transparent; border: none;
+  color: var(--color-text-muted); cursor: pointer;
+  font-size: 0.7rem; padding: 0; line-height: 1; transition: color 0.15s;
+}
+.searchClear:hover { color: var(--color-text); }
+
+.filterTabs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.filterTab {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 99px; padding: 0.35rem 0.9rem;
+  font-size: 0.75rem; color: var(--color-text-muted);
+  cursor: pointer; transition: all 0.15s;
+  font-family: inherit;
+}
+.filterTab:hover { border-color: var(--color-accent); color: var(--color-text); }
+.filterTabActive {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #000; font-weight: 600;
+}
+.filterCount {
+  background: rgba(255,255,255,0.1);
+  border-radius: 99px; padding: 0 6px;
+  font-size: 0.68rem; line-height: 1.5;
+}
+.filterTabActive .filterCount { background: rgba(0,0,0,0.15); }
+
+/* ── Result count ── */
+.resultCount { font-size: 0.75rem; color: var(--color-text-muted); margin: 0 0 1rem; }
+
+/* ── Orders list ── */
+.ordersList { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* ── Order card ── */
+.orderCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.orderCard:hover,
+.orderCardExpanded { border-color: rgba(34,197,94,0.3); }
+
+.orderMain {
+  width: 100%; background: transparent; border: none;
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer; text-align: left;
+  font-family: inherit;
+}
+
+.orderIcon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+
+.orderInfo { flex: 1; min-width: 0; }
+.orderName {
+  font-size: 0.88rem; font-weight: 500; color: var(--color-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.orderMeta { font-size: 0.72rem; color: var(--color-text-muted); margin-top: 0.2rem; }
+
+.orderMiddle { flex-shrink: 0; }
+
+.orderRight { text-align: right; flex-shrink: 0; }
+.orderPrice { font-size: 0.92rem; font-weight: 600; color: var(--color-text); font-variant-numeric: tabular-nums; }
+.orderItems { font-size: 0.7rem; color: var(--color-text-muted); margin-top: 0.15rem; }
+
+.expandChevron { color: var(--color-text-muted); flex-shrink: 0; transition: transform 0.25s; }
+.expandChevronOpen { transform: rotate(180deg); }
+
+/* ── Status badges ── */
+.statusBadge {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  border-radius: 4px; padding: 0.2rem 0.55rem;
+}
+.statusDelivered  { background: rgba(34,197,94,0.1);  color: #22c55e; }
+.statusTransit    { background: rgba(234,179,8,0.1);  color: #eab308; }
+.statusProcessing { background: rgba(59,130,246,0.1); color: #3b82f6; }
+.statusCancelled  { background: rgba(239,68,68,0.1);  color: #ef4444; }
+
+/* ── Expanded order detail ── */
+.orderDetailDivider { height: 1px; background: var(--color-border); }
+.orderDetail { animation: slideDown 0.2s ease; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+.orderDetailInner {
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+
+.detailSection { display: flex; flex-direction: column; gap: 0.5rem; }
+.detailLabel {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--color-text-muted); font-weight: 600;
+}
+.detailItemRow {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.82rem;
+}
+.detailItemName { flex: 1; color: var(--color-text); }
+.detailItemQty { color: var(--color-text-muted); }
+.detailItemPrice { color: var(--color-text); font-variant-numeric: tabular-nums; min-width: 60px; text-align: right; }
+
+.trackingCode {
+  font-size: 0.82rem; color: var(--color-accent);
+  font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
+}
+
+.detailActions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.actionBtn {
+  padding: 0.45rem 1rem;
+  background: var(--color-accent); border: none;
+  border-radius: 7px; font-size: 0.78rem; font-weight: 600;
+  color: #000; cursor: pointer; font-family: inherit;
+  transition: background 0.15s;
+}
+.actionBtn:hover { background: #16a34a; }
+
+.actionBtnOutline {
+  background: transparent;
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #ef4444;
+}
+.actionBtnOutline:hover { background: rgba(239,68,68,0.08); border-color: #ef4444; }
+
+.actionBtnGhost {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+.actionBtnGhost:hover { border-color: var(--color-accent); color: var(--color-accent); background: transparent; }
+
+/* ── Empty state ── */
+.emptyState {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 5rem 0;
+}
+.emptyIcon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
+.emptyTitle { font-size: 1rem; font-weight: 600; color: var(--color-text); margin: 0 0 0.4rem; }
+.emptySub { font-size: 0.82rem; color: var(--color-text-muted); margin: 0 0 1.25rem; }
+.emptyReset {
+  background: transparent; border: 1px solid var(--color-border);
+  border-radius: 8px; padding: 0.5rem 1.25rem;
+  font-size: 0.82rem; color: var(--color-text); cursor: pointer;
+  font-family: inherit; transition: border-color 0.15s;
+}
+.emptyReset:hover { border-color: var(--color-accent); }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .statsRow { grid-template-columns: repeat(2, 1fr); }
+  .orderMiddle { display: none; }
+}
+@media (max-width: 600px) {
+  .heroBanner { padding: 3rem 1.25rem 2rem; }
+  .contentWrap { padding: 1.5rem 1.25rem 3rem; }
+  .statsRow { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .orderMain { padding: 0.85rem 1rem; gap: 0.75rem; }
+  .orderRight { display: none; }
+}
